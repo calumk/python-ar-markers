@@ -84,4 +84,11 @@ def detect_markers(img):
             markers_list.append(HammingMarker(id=marker_id, contours=approx_curve))
         except ValueError:
             continue
-    return markers_list
+        
+    previous_marker = None
+    unique_list = []
+    for marker in markers_list:
+        if marker.center != previous_marker:
+            unique_list.append(marker)
+            previous_marker = marker.center
+    return unique_list
